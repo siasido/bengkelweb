@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 21, 2021 at 12:58 PM
+-- Generation Time: Jul 22, 2021 at 10:10 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.3.27
 
@@ -24,6 +24,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `montir`
+--
+
+CREATE TABLE `montir` (
+  `idmontir` int(11) NOT NULL,
+  `namamontir` varchar(40) NOT NULL,
+  `nohp` varchar(15) NOT NULL,
+  `is_deleted` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `montir`
+--
+
+INSERT INTO `montir` (`idmontir`, `namamontir`, `nohp`, `is_deleted`) VALUES
+(1, 'Galihzz', '08123123112', 0),
+(2, 'jajang', '09876786722', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `montirorders`
 --
 
@@ -39,20 +60,19 @@ CREATE TABLE `montirorders` (
   `kendala` text NOT NULL,
   `idrekening` int(11) NOT NULL,
   `status` varchar(100) NOT NULL,
-  `resi` varchar(30) NOT NULL,
+  `resi` varchar(30) DEFAULT NULL,
   `created_at` datetime NOT NULL,
-  `namamontir` varchar(50) NOT NULL
+  `idmontir` int(1) NOT NULL,
+  `notes` text DEFAULT NULL,
+  `statusbayar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `montirorders`
 --
 
-INSERT INTO `montirorders` (`id`, `userid`, `nama`, `nohp`, `alamatlengkap`, `orderdate`, `idmerk`, `type`, `kendala`, `idrekening`, `status`, `resi`, `created_at`, `namamontir`) VALUES
-(1, 2, 'nona ira', '0987678121', 'Jl. Ciawitali No 226', '2021-06-30 10:00:00', 1, 'NMAX 155 Abs', 'Komstir rusak', 1, 'kirim montir', 'resi-120210627153113.jpg', '2021-06-27 00:25:00', 'john'),
-(2, 2, 'Nona Rote', '0987678', 'Jl. Kaliurang', '2021-06-30 12:00:00', 3, 'Vario 125', 'Ganti oli', 2, 'menunggu pembayaran', '', '2021-06-27 05:30:10', ''),
-(3, 2, 'nona ira', '12313131321', 'asda', '2021-06-30 11:00:00', 3, 'Vario 125', 'asdad', 2, 'menunggu pembayaran', '', '2021-06-27 13:31:18', ''),
-(4, 2, 'juan', '0987656789', 'asdssada', '2021-08-06 09:00:00', 4, 'Vario', 'asdsa', 2, 'kirim montir', 'resi-420210703202427.jpg', '2021-07-03 20:09:50', 'xxx');
+INSERT INTO `montirorders` (`id`, `userid`, `nama`, `nohp`, `alamatlengkap`, `orderdate`, `idmerk`, `type`, `kendala`, `idrekening`, `status`, `resi`, `created_at`, `idmontir`, `notes`, `statusbayar`) VALUES
+(1, 2, '', '', 'zz', '2021-07-22 17:00:00', 3, 'Scoopy', 'zz', 1, '3', 'resi-120210722131044.jpg', '2021-07-22 13:09:43', 1, 'zzz', 2);
 
 -- --------------------------------------------------------
 
@@ -117,22 +137,18 @@ CREATE TABLE `serviceorders` (
   `idrekening` int(11) NOT NULL,
   `orderdate` datetime NOT NULL,
   `created_at` datetime NOT NULL,
-  `status` varchar(100) NOT NULL,
-  `resi` varchar(30) NOT NULL,
-  `statusbayar` int(11) NOT NULL
+  `status` int(1) DEFAULT NULL,
+  `resi` varchar(30) DEFAULT NULL,
+  `statusbayar` int(1) NOT NULL,
+  `notes` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `serviceorders`
 --
 
-INSERT INTO `serviceorders` (`id`, `userid`, `nama`, `idmerk`, `type`, `nohp`, `kendala`, `idrekening`, `orderdate`, `created_at`, `status`, `resi`, `statusbayar`) VALUES
-(1, 2, 'jane doe', 5, 'Piaggio', '09876545678', 'Busi rusak', 2, '2021-07-01 09:00:00', '2021-06-27 17:32:51', 'Belum Diproses', 'resi-120210627174908.jpg', 0),
-(2, 2, 'John', 5, 'zz', '081231768', 'asad', 2, '2021-07-21 12:00:00', '2021-07-03 20:16:22', 'menunggu pembayaran', 'resi-220210703202246.jpg', 0),
-(3, 2, 'z', 4, 'zz', '0812313131313', 'asdsa', 1, '2021-06-10 12:00:00', '2021-07-03 20:17:13', 'menunggu pembayaran', '', 0),
-(4, 2, 'John', 5, 'XMAX', '081231768', 'zz', 2, '2021-07-16 13:00:00', '2021-07-04 17:39:07', 'batal order', '', 0),
-(5, 2, 'Kalit', 3, 'scoopy', '08123131231', 'zzzz', 1, '2021-07-16 12:00:00', '2021-07-15 11:51:34', 'Sudah Selesai', 'resi-520210715115145.jpg', 1),
-(6, 2, NULL, 1, 'zz', NULL, 'asad', 1, '2021-07-24 09:00:00', '2021-07-21 17:52:59', 'menunggu pembayaran', '', 0);
+INSERT INTO `serviceorders` (`id`, `userid`, `nama`, `idmerk`, `type`, `nohp`, `kendala`, `idrekening`, `orderdate`, `created_at`, `status`, `resi`, `statusbayar`, `notes`) VALUES
+(2, 2, NULL, 3, 'zz', NULL, 'zz', 1, '2021-07-30 10:00:00', '2021-07-22 14:16:22', 2, 'resi-220210722145830.jpg', 2, 'ok');
 
 -- --------------------------------------------------------
 
@@ -161,6 +177,12 @@ INSERT INTO `users` (`userid`, `username`, `fullname`, `nohp`, `password`, `imag
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `montir`
+--
+ALTER TABLE `montir`
+  ADD PRIMARY KEY (`idmontir`);
 
 --
 -- Indexes for table `montirorders`
@@ -203,10 +225,16 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `montir`
+--
+ALTER TABLE `montir`
+  MODIFY `idmontir` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `montirorders`
 --
 ALTER TABLE `montirorders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `motor`
@@ -224,7 +252,7 @@ ALTER TABLE `rekening`
 -- AUTO_INCREMENT for table `serviceorders`
 --
 ALTER TABLE `serviceorders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
