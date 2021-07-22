@@ -82,7 +82,7 @@
                                 <div class="form-group">
                                     <label for="merk">Merk Motor</label>
                                     <select class="form-control" id="merk" name="idmerk" required>
-                                        <option value="-">- Pilih Merk -</option>
+                                        <option value="">- Pilih Merk -</option>
                                         <?php foreach ($motors as $key => $value) {?> 
                                             <option value="<?=$value->id?>" <?php echo $this->input->post('idmerk') == $value->id ? 'selected' : null ?>><?=$value->merk?></option>
                                         <?php } ?>

@@ -98,6 +98,12 @@
                 Master Data
             </div>
             <!-- Nav Item - Tables -->
+            <li class="nav-item <?=$active_menu == 'montir' ? 'active' : null?>">
+                <a class="nav-link" href="<?=site_url('montir')?>">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Montir</span></a>
+            </li>
+            <!-- Nav Item - Tables -->
             <li class="nav-item <?=$active_menu == 'motor' ? 'active' : null?>">
                 <a class="nav-link" href="<?=site_url('motor')?>">
                     <i class="fas fa-fw fa-table"></i>

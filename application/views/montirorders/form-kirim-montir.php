@@ -14,14 +14,26 @@
                 <div class="card-body">
                     <form action="<?php echo site_url('jasamontir/postsendmontir')?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="id" value="<?=$data->orderid?>">
-                        <div class="col-lg-6" style="margin-bottom: 1em;">
-                            <input type="text" name="namamontir" class="form-control" placeholder="nama montir" required>                           
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="montir">Montir</label>
+                                    <select class="form-control" id="montir" name="idmontir" required>
+                                        <option value="-">- Pilih Montir -</option>
+                                        <?php foreach ($data_montir as $key => $value) {?> 
+                                            <option value="<?=$value->idmontir?>" <?php echo $this->input->post('idmontir') == $value->idmontir ? 'selected' : null ?>><?=$value->namamontir.' - ' .$value->nohp?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                                
-                    <div class="col-lg-6">
-                        <button name="submit" type="submit" class="btn btn-submit btn-primary btn-user btn-block">
-                            Send
-                        </button>
+                        
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <button name="submit" type="submit" class="btn btn-submit btn-primary btn-user btn-block">
+                                    Send
+                                </button>
+                            </div>
                         </div>
                                 
                     

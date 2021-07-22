@@ -15,7 +15,7 @@
                     <form action="<?php echo site_url('rekening/update')?>" method="post">
                         <div class="row">
                             <div class="col-lg-6">
-                                <input type="hidden" name="id" value="<?=$this->input->post('namabank') ?? $data->id?>">
+                                <input type="hidden" name="id" value="<?=$this->input->post('id') ?? $data->id?>">
                                 <div class="form-group">
                                     <label for="namabank">Nama Bank</label>
                                     <input class="form-control" name="namabank" value="<?=$this->input->post('namabank') ?? $data->namabank ?>" id="namabank" type="text" placeholder="BNI, MANDIRI, etc..">

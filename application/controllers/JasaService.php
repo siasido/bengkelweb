@@ -99,8 +99,8 @@ class JasaService extends CI_Controller {
                 'type' => $post['type'],
                 'kendala' => $post['kendala'],
                 'idrekening' => $post['idrekening'],
-                'status' => 'menunggu pembayaran',
-                'created_at' => date("Y-m-d H:i:s")
+                'created_at' => date("Y-m-d H:i:s"),
+                'statusbayar' => 0
             );
 
             $this->jasaservice_m->add($postData);

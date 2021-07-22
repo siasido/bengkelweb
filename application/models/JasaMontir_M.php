@@ -23,11 +23,12 @@ class JasaMontir_M extends CI_Model {
     }
 
     public function get($id = null){
-        $this->db->select('a.id as orderid, a.namamontir, a.userid, b.nohp, b.fullname as nama, a.alamatlengkap, idmerk, merk, type, kendala, resi, idrekening, namabank, norek, namaakun, orderdate, status');
+        $this->db->select('a.id as orderid, e.namamontir, a.statusbayar, a.notes, a.userid, b.nohp, b.fullname as nama, a.alamatlengkap, idmerk, merk, type, kendala, resi, idrekening, namabank, norek, namaakun, orderdate, status');
         $this->db->from('montirorders a');
         $this->db->join('users b', 'a.userid = b.userid');
         $this->db->join('motor c', 'a.idmerk = c.id');
         $this->db->join('rekening d', 'a.idrekening = d.id');
+        $this->db->join('montir e', 'a.idmontir = e.idmontir', 'left');
         if($id != null){
             $this->db->where('a.id', $id);
         }
@@ -37,11 +38,12 @@ class JasaMontir_M extends CI_Model {
     }
 
     public function getByUserId($id = null){
-        $this->db->select('a.id as orderid, a.namamontir, a.userid, b.nohp, b.fullname as nama, a.alamatlengkap, idmerk, merk, type, kendala, resi, idrekening, namabank, norek, namaakun, orderdate, status');
+        $this->db->select('a.id as orderid, a.userid, a.statusbayar, a.notes, e.namamontir, b.nohp, b.fullname as nama, a.alamatlengkap, idmerk, merk, type, kendala, resi, idrekening, namabank, norek, namaakun, orderdate, status');
         $this->db->from('montirorders a');
         $this->db->join('users b', 'a.userid = b.userid');
         $this->db->join('motor c', 'a.idmerk = c.id');
         $this->db->join('rekening d', 'a.idrekening = d.id');
+        $this->db->join('montir e', 'a.idmontir = e.idmontir', 'left');
         if($id != null){
             $this->db->where('a.userid', $id);
         }

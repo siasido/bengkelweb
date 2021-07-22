@@ -13,6 +13,7 @@ class JasaMontir extends CI_Controller {
         $this->load->model('motor_m');
         $this->load->model('rekening_m');
         $this->load->model('jasamontir_m');
+        $this->load->model('montir_m');
         date_default_timezone_set('Asia/Jakarta');
     	
 	}
@@ -90,7 +91,7 @@ class JasaMontir extends CI_Controller {
                 'type' => $post['type'],
                 'kendala' => $post['kendala'],
                 'idrekening' => $post['idrekening'],
-                'status' => 'menunggu pembayaran',
+                'statusbayar' => 0,
                 'created_at' => date("Y-m-d H:i:s")
             );
 
@@ -178,10 +179,6 @@ class JasaMontir extends CI_Controller {
             'deadline' => $time
         );
 
-        
-        // echo json_encode($data);
-
-        // exit();
 		$this->template->load('template-customer', 'montirorders/customer-upload-resi', $data);
     }
 
@@ -189,8 +186,13 @@ class JasaMontir extends CI_Controller {
     public function submitresi(){
 
         $post = $this->input->post(null, true);
-        // echo json_encode($post);
+        $targetFile = $this->jasamontir_m->get($post['id'])->row()->resi;
+        // echo $targetFile;
+        if($targetFile != null){
+            unlink('./uploads/resi/'.$targetFile);
         // exit();
+        }   
+
         $configurasi['upload_path']          = './uploads/resi/';
         $configurasi['allowed_types']        = 'jpg|png|jpeg';
         $configurasi['max_size']             = 2048;
@@ -207,11 +209,9 @@ class JasaMontir extends CI_Controller {
 
             $postData = array(
                 'resi' => $this->upload->data('file_name'),
-                'status' => 'menunggu konfirmasi pembayaran'
+                'statusbayar' => 1,
+                'notes' => '',
             );
-
-            // echo json_encode($postData);
-            // exit();
     
             $this->jasamontir_m->update($postData, $post['id']);
             if($this->db->affected_rows() > 0){
@@ -240,8 +240,11 @@ class JasaMontir extends CI_Controller {
 
     public function accpembayaran(){
         $post = $this->input->post(null, true);
+        // var_dump($post);
+        // exit();
         $postData = array(
-            'status' => 'pembayaran diterima'
+            'statusbayar' => $post['statusbayar'],
+            'notes' => $post['notes']
         );
         $this->jasamontir_m->update($postData, $post['id']);
         if($this->db->affected_rows() > 0){
@@ -308,7 +311,8 @@ class JasaMontir extends CI_Controller {
         $query = $this->jasamontir_m->get($id)->row();
         $data = array(
             'active_menu' => 'jasa-montir',
-            'data' => $query
+            'data' => $query,
+            'data_montir' => $this->montir_m->get()->result(),
         );
 
         $this->template->load('template', 'montirorders/form-kirim-montir', $data);
@@ -318,10 +322,30 @@ class JasaMontir extends CI_Controller {
         $post = $this->input->post(null, true);
 
         $postData = array(
-            'namamontir' => $post['namamontir'],
-            'status' => 'kirim montir'
+            'idmontir' => $post['idmontir'],
+            'status' => 1 //untuk kirim montir statusnya 1, dikerjakan =2, selesai =3
         );
 
+        $this->jasamontir_m->update($postData, $post['id']);
+        if($this->db->affected_rows() > 0){
+            $this->session->set_flashdata('success', 'Data berhasil disimpan');
+            redirect('jasamontir/allmontirorders');
+        }  
+    }
+
+    public function updatestatus($id){
+        $data = array(
+            'active_menu' => 'jasa-montir',
+            'row' => $this->jasamontir_m->get($id)->row()
+        );
+		$this->template->load('template', 'montirorders/update-status-pengerjaan', $data);
+    }
+
+    public function submitupdatestatus(){
+        $post = $this->input->post(null, true);
+        $postData = array (
+            'status' => $post['status']
+        );
         $this->jasamontir_m->update($postData, $post['id']);
         if($this->db->affected_rows() > 0){
             $this->session->set_flashdata('success', 'Data berhasil disimpan');
