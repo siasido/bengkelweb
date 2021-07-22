@@ -173,10 +173,8 @@ class JasaService extends CI_Controller {
     
     }
 
-    public function updatestatuspengerjaan(){
+    public function submitupdatestatus(){
         $post = $this->input->post(null, true);
-        // print_r($post);
-        // exit();
         $postData = array (
             'status' => $post['status']
         );
@@ -186,8 +184,6 @@ class JasaService extends CI_Controller {
             redirect('jasaservice/allservicebooking');
         }  
     }
-
-
 
     public function getformbayar($id){
         $query = $this->jasaservice_m->get($id)->row();
@@ -209,6 +205,11 @@ class JasaService extends CI_Controller {
 
         $post = $this->input->post(null, true);
 
+        $targetFile = $this->jasaservice_m->get($post['id'])->row()->resi;
+        if($targetFile != null){
+            unlink('./uploads/resi/'.$targetFile);
+        }   
+
         $configurasi['upload_path']          = './uploads/resi/';
         $configurasi['allowed_types']        = 'jpg|png|jpeg';
         $configurasi['max_size']             = 2048;
@@ -225,12 +226,9 @@ class JasaService extends CI_Controller {
 
             $postData = array(
                 'resi' => $this->upload->data('file_name'),
-                'status' => 'menunggu konfirmasi pembayaran'
+                'statusbayar' => 1
             );
 
-            // echo json_encode($postData);
-            // exit();
-    
             $this->jasaservice_m->update($postData, $post['id']);
             if($this->db->affected_rows() > 0){
                 echo "<script>
@@ -262,8 +260,8 @@ class JasaService extends CI_Controller {
     public function accpembayaran(){
         $post = $this->input->post(null, true);
         $postData = array(
-            'status' => 'pembayaran diterima',
-            'statusbayar' => 1
+            'notes' => $post['notes'],
+            'statusbayar' => $post['statusbayar']
         );
         $this->jasaservice_m->update($postData, $post['id']);
         if($this->db->affected_rows() > 0){

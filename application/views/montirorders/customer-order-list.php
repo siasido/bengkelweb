@@ -46,7 +46,9 @@
                             <td> Menunggu Pembayaran </td>
                             <td><?=$data->status?></td>
                             <td>
-                                -
+                                <a href="<?=site_url('jasamontir/getformbayar/'.$data->orderid)?>" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-upload"></i>
+                                </a>
                             </td>
                         <?php } else if ($data->statusbayar == 1 ) { ?>
                             <td> Menunggu Konfirmasi Pembayaran oleh Admin</td>
@@ -70,7 +72,7 @@
                                 <td></td>
                             <?php } ?>
                         <?php } else if ($data->statusbayar == 3) { ?>
-                            <td> Pembayaran Ditolak karena <?=$data->notes?> .Silahkan Upload Ulang Bukti Pembayaran </td>
+                            <td> Pembayaran Ditolak karena <?=$data->notes ??  '-'?> .Silahkan Upload Ulang Bukti Pembayaran </td>
                             <td> <?=$data->status?></td>
                             <td>
                                 <a href="<?=site_url('jasamontir/edit/'.$data->orderid)?>" class="btn btn-warning btn-sm">

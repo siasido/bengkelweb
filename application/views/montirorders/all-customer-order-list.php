@@ -93,18 +93,7 @@
                         <?php } else if ($data->statusbayar == 3) { ?>
                             <td> Pembayaran Ditolak karena <?=$data->notes?> .Silahkan Upload Ulang Bukti Pembayaran </td>
                             <td> <?=$data->status?></td>
-                            <td>
-                                <a href="<?=site_url('jasamontir/edit/'.$data->orderid)?>" class="btn btn-warning btn-sm">
-                                    Edit
-                                </a>
-                                <a href="<?=site_url('jasamontir/cancel/'.$data->orderid)?>" class="btn btn-danger btn-sm">
-                                    Cancel
-                                </a>
-                                <a href="<?=site_url('jasamontir/getformbayar/'.$data->orderid)?>" class="btn btn-warning btn-sm">
-                                    <i class="fas fa-upload"></i>
-                                </a>
-                                
-                            </td>
+                            <td></td>
                         <?php }?>
                     </tr>
                 <?php } ?>

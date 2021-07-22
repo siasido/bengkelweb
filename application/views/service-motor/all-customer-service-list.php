@@ -19,7 +19,8 @@
                         <th>Booking Untuk Tanggal</th>
                         <th>Merk Motor</th>
                         <th>Kendala</th>
-                        <th>Status</th>
+                        <th>Status Bayar</th>
+                        <th>Status Pengerjaan</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -34,27 +35,54 @@
                         <td><?=$data->orderdate?></td>
                         <td><?=$data->merk.' '.$data->type?></td>
                         <td><?=$data->kendala?></td>
-                        <td><?=$data->status?></td>
-                        <td class="text-center">
-
-                            <?php if ( ($now > $time) && $data->status == 'menunggu pembayaran') { ?>
-                                Invalid
-                                
-                            <?php } else if ( ($now <= $time) && $data->status == 'menunggu pembayaran') {?>
+                        <?php if (($now > $time && $data->statusbayar == 0 ) || ($now > $time && $data->statusbayar == 2)) { ?>
+                            <td> Pesanan Invalid </td>
+                            <td> - </td>
+                            <td> - </a>
+                            </td>
+                        <?php } else if ($data->statusbayar == 0 ) { ?>
+                            <td> Menunggu Pembayaran </td>
+                            <td><?=$data->status?></td>
+                            <td>
                                 -
-                            <?php } else if (($now <= $time) && $data->status == 'menunggu konfirmasi pembayaran') { ?>
-                                <a href="<?=site_url('jasaservice/lihatbuktibayar/'.$data->orderid)?>" class="btn btn-primary btn-sm">
-                                    <i class="fas fa-eye"></i>
+                            </td>
+                        <?php } else if ($data->statusbayar == 1 ) { ?>
+                            <td> Menunggu Konfirmasi Pembayaran oleh Admin</td>
+                            <td><?=$data->status?></td>
+                            <td> 
+                                <a href="<?=site_url('jasaservice/lihatbuktibayar/'.$data->orderid)?>" class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-eye"></i> Lihat Bukti Bayar    
                                 </a>
-                            <?php } ?>
-
-                            <?php if ($data->statusbayar == 1) { ?>
+                            </td>
+                        <?php } else if ($data->statusbayar == 2 )  { ?>
+                            <td>Pembayaran Diterima</td>
+                            <?php if ($data->status == 0 || $data->status == null) { ?>
+                            <td></td>
+                            <td>
                                 <a href="<?=site_url('jasaservice/updatestatus/'.$data->orderid)?>" class="btn btn-warning btn-sm">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                            <?php }?>
+                            </td>
+                            <?php } else if ($data->status == 1) { ?>
+                                <td>Sedang Diproses</td>
+
+                                <td>
+                                    <a href="<?=site_url('jasaservice/updatestatus/'.$data->orderid)?>" class="btn btn-warning btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                </td>
+                            <?php } else if ($data->status == 2) { ?>
+                                <td>Telah Selesai Diservice</td>
+
+                                <td></td>
+                            <?php } ?>
                             
-                        </td>
+                        <?php } else if ($data->statusbayar == 3) { ?>
+                            <td> Pembayaran Ditolak karena <?=$data->notes ?? '-'?> .Silahkan Upload Ulang Bukti Pembayaran </td>
+                            <td> <?=$data->status?></td>
+                            <td>
+                            </td>
+                        <?php }?>
                     </tr>
                 <?php } ?>
                     

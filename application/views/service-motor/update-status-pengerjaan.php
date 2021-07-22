@@ -12,7 +12,7 @@
             <!-- Card Content - Collapse -->
             <div class="collapse show" id="collapseCardExample">
                 <div class="card-body">
-                    <form action="<?php echo site_url('jasaservice/updatestatuspengerjaan')?>" method="post">
+                    <form action="<?php echo site_url('jasaservice/submitupdatestatus')?>" method="post">
                         <input type="hidden" name="id" value="<?=$row->orderid?>"></input>
                         <div class="row">
                             <div class="col-lg-6">
@@ -76,22 +76,23 @@
                                 </div> 
                             </div>
 
+                            
+                            
+                        </div>
+                        <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="status">Status Pengerjaan:</label>
                                     <select class="form-control" id="stats" name="status" required>
                                         <option value="">- Pilih Status -</option>
                                         <?php $status = $this->input->post('status') ?? $row->status ?>
-
-                                        <option value="Belum Diproses" <?php echo $status == "Belum Diproses" ? 'selected' : null ?>>Belum Diproses</option>
-                                        <option value="Sedang Diproses" <?php echo $status == "Sedang Diproses" ? 'selected' : null ?>>Sedang Diproses</option>
-                                        <option value="Sudah Selesai" <?php echo $status == "Sudah Selesai" ? 'selected' : null ?>>Sudah Selesai</option>
+                                        <option value="1" <?php echo $status == "1" ? 'selected' : null ?>>Sedang Diproses</option>
+                                        <option value="2" <?php echo $status == "2" ? 'selected' : null ?>>Sudah Selesai</option>
                                         
                                     </select>
                                     <label class="invalid-text" for="nohp"><?php echo form_error('status'); ?></label>
                                 </div>     
                             </div>
-                            
                         </div>
                         <div class="row">
                             <div class="col-lg-6 offset-lg-6">
