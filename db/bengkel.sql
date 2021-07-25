@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 22, 2021 at 10:10 AM
+-- Generation Time: Jul 25, 2021 at 09:56 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.3.27
 
@@ -148,7 +148,9 @@ CREATE TABLE `serviceorders` (
 --
 
 INSERT INTO `serviceorders` (`id`, `userid`, `nama`, `idmerk`, `type`, `nohp`, `kendala`, `idrekening`, `orderdate`, `created_at`, `status`, `resi`, `statusbayar`, `notes`) VALUES
-(2, 2, NULL, 3, 'zz', NULL, 'zz', 1, '2021-07-30 10:00:00', '2021-07-22 14:16:22', 2, 'resi-220210722145830.jpg', 2, 'ok');
+(2, 2, NULL, 3, 'zz', NULL, 'zz', 1, '2021-07-30 10:00:00', '2021-07-22 14:16:22', 2, 'resi-220210722145830.jpg', 2, 'ok'),
+(3, 3, NULL, 1, 'Nmax', NULL, 'aaaaa', 1, '2021-07-26 09:00:00', '2021-07-25 10:50:18', NULL, NULL, 0, ''),
+(4, 3, NULL, 1, 'Nmax', NULL, 'aaaaa', 1, '2021-07-26 15:00:00', '2021-07-25 10:51:32', NULL, NULL, 0, '');
 
 -- --------------------------------------------------------
 
@@ -163,16 +165,18 @@ CREATE TABLE `users` (
   `nohp` varchar(15) NOT NULL,
   `password` varchar(40) NOT NULL,
   `image` varchar(40) NOT NULL,
-  `level` int(11) NOT NULL
+  `level` int(11) NOT NULL,
+  `email` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`userid`, `username`, `fullname`, `nohp`, `password`, `image`, `level`) VALUES
-(1, 'admin', 'admin 21', '0812123411234', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'user-20210624081614.jpg', 1),
-(2, 'john', 'johnny cash z', '0987653456788', 'a51dda7c7ff50b61eaea0444371f4a6a9301e501', 'user-20210623063035.jpg', 2);
+INSERT INTO `users` (`userid`, `username`, `fullname`, `nohp`, `password`, `image`, `level`, `email`) VALUES
+(1, 'admin', 'admin 21', '0812123411234', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'user-20210624081614.jpg', 1, ''),
+(2, 'john', 'johnny cash z', '0987653456788', 'a51dda7c7ff50b61eaea0444371f4a6a9301e501', 'user-20210623063035.jpg', 2, 'asidosibuea@gmail.com'),
+(3, 'gege', 'gege zz', '081210002200', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', 'user-20210725053033.jpg', 2, 'sibuea.asido@gmail.com');
 
 --
 -- Indexes for dumped tables
@@ -252,13 +256,13 @@ ALTER TABLE `rekening`
 -- AUTO_INCREMENT for table `serviceorders`
 --
 ALTER TABLE `serviceorders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
