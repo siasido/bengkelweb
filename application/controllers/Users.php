@@ -32,6 +32,7 @@ class Users extends CI_Controller {
 		$this->form_validation->set_message('matches', '{field} tidak sesuai dengan kata sandi, silahkan ganti.'); 
         
         $this->form_validation->set_rules('fullname', 'Nama Lengkap', 'trim|required|min_length[3]|max_length[40]');
+        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|max_length[40]');
         $this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[4]|max_length[20]|is_unique[users.username]');
         $this->form_validation->set_rules('password', 'Kata Sandi', 'trim|required|min_length[4]|max_length[20]');
         $this->form_validation->set_rules('nohp', 'No. HP', 'trim|required|min_length[11]|max_length[15]');
@@ -42,6 +43,8 @@ class Users extends CI_Controller {
             $this->load->view('users/register');
         } else {
             $data = array(
+                'fullname' => $post['fullname'],
+                'email' => $post['email'],
                 'username' => $post['username'],
                 'password' => sha1($post['password']),
                 'nohp' => $post['nohp'],

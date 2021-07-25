@@ -40,6 +40,10 @@
                   <input type="text" name="fullname" value="<?php echo set_value('fullname');?>" class="form-control form-control-user" id="fullname" placeholder="Nama Lengkap">
                   <label style="color:red" for="fullname"><?php echo form_error('fullname'); ?></label>
                 </div>
+                <div class="form-group">
+                  <input type="email" name="email" value="<?php echo set_value('email');?>" class="form-control form-control-user" id="email" placeholder="john@john.com">
+                  <label style="color:red" for="email"><?php echo form_error('email'); ?></label>
+                </div>
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
                     <input type="text" name="username" value="<?php echo set_value('username');?>" class="form-control form-control-user" id="username" placeholder="Username">

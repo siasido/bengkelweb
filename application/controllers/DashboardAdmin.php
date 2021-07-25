@@ -6,15 +6,17 @@ class DashboardAdmin extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('tanggal');
 		// $this->load->model('order_m');
-		isLogout();
+		// isLogout();
 	}
 
 	public function index()
 	{
+		
 		$data = array(
 			'active_menu' => 'dashboard'
 		);
 		$this->template->load('template', 'admin/dashboard', $data);
+		
 	}
 
 

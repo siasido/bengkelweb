@@ -96,6 +96,39 @@ class JasaMontir extends CI_Controller {
             );
 
             $this->jasamontir_m->add($postData);
+
+            $rowRecipient = $this->user_m->get($this->session->userdata('userid'))->row();
+            $rowMerk = $this->motor_m->get($post['idmerk'])->row();
+            $rowRekening = $this->rekening_m->get($post['idrekening'])->row();
+
+            $time = DateTime::createFromFormat('Y-m-d H:i:s', date("Y-m-d H:i:s"));
+            $time->modify('+30 minutes');
+
+            $this->jasaservice_m->add($postData);
+
+            $mailData = array(
+                'recipient' => $rowRecipient->email,
+                'attachment' => null,
+                'subject' => 'Pembayaran DP Booking Montir - SM Motor',
+                'content' => '
+                    <html>
+                        <head>
+                        <title>Pembayaran DP Booking Montir - SM Motor</title>
+                        </head>
+                        <body>
+                        <p>Pelanggan yth a.n,'.$rowRecipient->fullname .'</p>
+                        <p>Anda telah melakukan pemesanan montir motor untuk tanggal '. $post['orderdate'].' pukul '.$post['jam'] .'</p>
+                        <p>Dengan jenis kendaraan : '.$rowMerk->merk.' '.$post['type'].'</p>
+                        <p>Kendala: '.$post['kendala'].'</p>
+                        <p>Agar Pemesanan anda dapat diterima segera lakukan pembayaran DP Sebesar Rp50.000,00 ke rekening '.$rowRekening->namabank.' 
+                        dengan nomor rekening '.$rowRekening->norek.' atas nama '. $rowRekening->namaakun.' paling lambat pada tanggal '. $time->format('Y-m-d').' pukul '.$time->format('H:i').' </p>
+                        </body>
+                    </html>"
+                ' 
+            );
+ 
+            $this->sendmail->send($mailData);
+
             if($this->db->affected_rows() > 0){
                 $this->session->set_flashdata('success', 'Data berhasil disimpan');
                 redirect('jasamontir/mymontirorders');

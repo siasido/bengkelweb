@@ -24,6 +24,13 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
+                                    <label for="email">Nama Lengkap</label>
+                                    <input class="form-control" name="email" value="<?=$this->input->post('email') ?? $row->email ?>" id="email" type="email" placeholder="Full name..">
+                                    <label class="invalid-text" for="email"><?php echo form_error('email'); ?></label>
+                                </div>     
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
                                     <label for="level">Role</label>
                                     <select class="form-control" id="level" name="level" required>
                                         <option value="">- Pilih Kategori -</option>
