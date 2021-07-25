@@ -56,7 +56,8 @@
                         <th>Booking Untuk Tanggal</th>
                         <th>Merk Motor</th>
                         <th>Kendala</th>
-                        <th>Status</th>
+                        <th>Status Pembayaran</th>
+                        <th>Status Pengerjaan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,7 +71,29 @@
                         <td><?=$orderdate->format('d/m/Y H:i')?></td>
                         <td><?=$data->merk.' '.$data->type?></td>
                         <td><?=$data->kendala?></td>
-                        <td><?=$data->status?></td>
+                        <?php if (($now > $time && $data->statusbayar == 0 ) || ($now > $time && $data->statusbayar == 2)) { ?>
+                            <td> Pesanan Invalid </td>
+                            <td> - </td>
+                        <?php } else if ($data->statusbayar == 0 ) { ?>
+                            <td> Menunggu Pembayaran </td>
+                            <td><?=$data->status?></td>
+                        <?php } else if ($data->statusbayar == 1 ) { ?>
+                            <td> Menunggu Konfirmasi Pembayaran oleh Admin</td>
+                            <td><?=$data->status?></td>
+                        <?php } else if ($data->statusbayar == 2 )  { ?>
+                            <td>Pembayaran Diterima</td>
+                            <?php if ($data->status == 0 || $data->status == null) { ?>
+                            <td></td>
+                            <?php } else if ($data->status == 1) { ?>
+                                <td>Sedang Diproses</td>
+                            <?php } else if ($data->status == 2) { ?>
+                                <td>Telah Selesai Diservice</td>
+                            <?php } ?>
+                            
+                        <?php } else if ($data->statusbayar == 3) { ?>
+                            <td> Pembayaran Ditolak karena <?=$data->notes ?? '-'?> .Silahkan Upload Ulang Bukti Pembayaran </td>
+                            <td> <?=$data->status?></td>
+                        <?php }?>
                     </tr>
                 <?php } ?>
                     

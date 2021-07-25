@@ -40,7 +40,7 @@
                         <?php if (($now > $time && $data->statusbayar == 0 ) || ($now > $time && $data->statusbayar == 2)) { ?>
                             <td> Pesanan Invalid </td>
                             <td> - </td>
-                            <td> - </a>
+                            <td> - 
                             </td>
                         <?php } else if ($data->statusbayar == 0 ) { ?>
                             <td> Menunggu Pembayaran </td>

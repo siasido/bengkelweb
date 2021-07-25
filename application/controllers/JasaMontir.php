@@ -104,8 +104,6 @@ class JasaMontir extends CI_Controller {
             $time = DateTime::createFromFormat('Y-m-d H:i:s', date("Y-m-d H:i:s"));
             $time->modify('+30 minutes');
 
-            $this->jasaservice_m->add($postData);
-
             $mailData = array(
                 'recipient' => $rowRecipient->email,
                 'attachment' => null,

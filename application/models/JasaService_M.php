@@ -51,8 +51,9 @@ class JasaService_M extends CI_Model {
     }
 
     public function getByMonth($month){
-        $this->db->select('a.id as orderid, a.statusbayar, a.userid, a.nohp, a.nama, idmerk, merk, type, kendala, resi, idrekening, namabank, norek, namaakun, orderdate, status');
+        $this->db->select('a.id as orderid, a.statusbayar,  a.userid, b.nohp, b.fullname as nama, idmerk, merk, type, kendala, resi, idrekening, namabank, norek, namaakun, orderdate, status');
         $this->db->from('serviceorders a');
+        $this->db->join('users b', 'a.userid = b.userid');
         $this->db->join('motor c', 'a.idmerk = c.id');
         $this->db->join('rekening d', 'a.idrekening = d.id');
         $this->db->where('month(a.orderdate)', $month);

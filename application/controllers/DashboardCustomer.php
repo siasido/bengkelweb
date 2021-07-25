@@ -14,7 +14,7 @@ class DashboardCustomer extends CI_Controller {
 		$data = array(
 			'active_menu' => 'dashboard'
 		);
-		$this->template->load('template-customer', 'admin/dashboard', $data);
+		$this->template->load('template-customer', 'customer/dashboard', $data);
 
 	}
 
