@@ -1,7 +1,7 @@
 
 <div class="row">
     <div class="col-lg-6"> <h1 class="h3 mb-4 text-gray-800">List Order Montir</h1> </div>
-    <div class="col-lg-6 text-right"> <a class="btn btn-primary" href="<?=site_url('jasamontir/ordermontir')?>">Booking Montir</a></div>
+    <!-- <div class="col-lg-6 text-right"> <a class="btn btn-primary" href="<?=site_url('jasamontir/ordermontir')?>">Booking Montir</a></div> -->
 </div>
 
 
@@ -66,6 +66,9 @@
                                 <td>
                                     <a href="<?=site_url('jasamontir/sendmontir/'.$data->orderid)?>" class="btn btn-success btn-sm">
                                         Kirim Montir
+                                    </a>
+                                    <a href="<?=site_url('jasamontir/sendreminder/'.$data->orderid)?>" class="btn btn-primary btn-sm">
+                                        Send Reminder
                                     </a>
                                 </td>
                             <?php } else if ($data->status == 1) { ?>

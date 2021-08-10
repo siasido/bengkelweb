@@ -126,14 +126,14 @@ class JasaService extends CI_Controller {
                         <title>Pembayaran DP Service - SM Motor</title>
                         </head>
                         <body>
-                        <p>Pelanggan yth a.n,'.$rowRecipient->fullname .'</p>
+                        <p>Pelanggan yth a.n, '.$rowRecipient->fullname .'</p>
                         <p>Anda telah melakukan pemesanan service motor untuk tanggal '. $post['orderdate'].' pukul '.$post['jam'] .'</p>
                         <p>Dengan jenis kendaraan : '.$rowMerk->merk.' '.$post['type'].'</p>
                         <p>Kendala: '.$post['kendala'].'</p>
                         <p>Agar Pemesanan anda dapat diterima segera lakukan pembayaran DP Sebesar Rp50.000,00 ke rekening '.$rowRekening->namabank.' 
                         dengan nomor rekening '.$rowRekening->norek.' atas nama '. $rowRekening->namaakun.' paling lambat pada tanggal '. $time->format('Y-m-d').' pukul '.$time->format('H:i').' </p>
                         </body>
-                    </html>"
+                    </html>
                 ' 
             );
  
@@ -357,6 +357,43 @@ class JasaService extends CI_Controller {
             redirect('jasaservice/myservicelist');
         } 
 
+    }
+
+    public function sendreminder($id){
+        //notifikasi ke email setelah pesanan / booking dilakukan (disimpan); detil notifikasi : tgl booking, 
+            //jam booking, keluhan, kendaraan, biaya yang harus dibayar, maksimal jam bayar, 
+            //bayar ke bank apa, no rek dan nama rekening;
+
+            $idUser = $this->jasaservice_m->get($id)->row()->userid;
+
+            $orderData = $this->jasaservice_m->get($id)->row();
+            $userData = $this->user_m->get($idUser)->row();
+
+            $mailData = array(
+                'recipient' => $userData->email,
+                'attachment' => null,
+                'subject' => 'Reminder Service Motor - SM Motor',
+                'content' => '
+                    <html>
+                        <head>
+                        <title>Reminder Service - SM Motor</title>
+                        </head>
+                        <body>
+                        <p>Pelanggan yth a.n, '.$userData->fullname .'</p>
+                        <p> Service motor untuk tanggal '. $orderData->orderdate .'</p>
+                        <p>Dengan jenis kendaraan : '.$orderData->merk.' '.$orderData->type.'</p>
+                        <p>Agar Segera Membawa Motor 30 Menit Sebelum Service</p>
+                        </body>
+                    </html>
+                ' 
+            );
+ 
+            $this->sendmail->send($mailData);
+
+            if($this->db->affected_rows() > 0){
+                $this->session->set_flashdata('notif_success', 'Data berhasil disimpan');
+                redirect('jasaservice/allservicebooking');
+            }
     }
 
 

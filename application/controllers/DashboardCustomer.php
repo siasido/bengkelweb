@@ -12,7 +12,9 @@ class DashboardCustomer extends CI_Controller {
 	public function index()
 	{
 		$data = array(
-			'active_menu' => 'dashboard'
+			'active_menu' => 'dashboard',
+			'totalOrderMontir' => $this->db->count_all('montirorders'),
+			'totalService' => $this->db->count_all('serviceorders'),
 		);
 		$this->template->load('template-customer', 'customer/dashboard', $data);
 

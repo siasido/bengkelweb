@@ -1,9 +1,26 @@
 
 <div class="row">
     <div class="col-lg-6"> <h1 class="h3 mb-4 text-gray-800">List Order Montir</h1> </div>
-    <div class="col-lg-6 text-right"> <a class="btn btn-primary" href="<?=site_url('jasamontir/ordermontir')?>">Booking Montir</a></div>
+    <!-- <div class="col-lg-6 text-right"> <a class="btn btn-primary" href="<?=site_url('jasamontir/ordermontir')?>">Booking Montir</a></div> -->
 </div>
 
+<?php if ($this->session->flashdata('notif_success')) { ?>
+        <div class="alert alert-success alert-dismissible bg-success text-white border-0 fade show" role="alert">
+            <button type="button" class="close ml-auto" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>Success - </strong><?= $this->session->flashdata('notif_success') ?>
+        </div>
+    <?php } ?>
+
+    <?php if ($this->session->flashdata('notif_failed')) { ?>
+        <div class="alert alert-danger alert-dismissible bg-danger text-white border-0 fade show" role="alert">
+            <button type="button" class="close ml-auto" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>Error - </strong> <?= $this->session->flashdata('notif_failed') ?>
+        </div>
+    <?php } ?>
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -60,7 +77,10 @@
                             <td></td>
                             <td>
                                 <a href="<?=site_url('jasaservice/updatestatus/'.$data->orderid)?>" class="btn btn-warning btn-sm">
-                                    <i class="fas fa-edit"></i>
+                                    <i class="fas fa-edit"></i> Edit
+                                </a> 
+                                <a href="<?=site_url('jasaservice/sendreminder/'.$data->orderid)?>" class="btn btn-primary btn-sm">
+                                    Send Reminder
                                 </a>
                             </td>
                             <?php } else if ($data->status == 1) { ?>

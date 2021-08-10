@@ -13,11 +13,23 @@ class DashboardAdmin extends CI_Controller {
 	{
 		
 		$data = array(
-			'active_menu' => 'dashboard'
+			'active_menu' => 'dashboard',
+			'totalMontir' => $this->db->count_all('montir'),
+			'totalOrderMontir' => $this->db->count_all('montirorders'),
+			'totalService' => $this->db->count_all('serviceorders'),
+			'totalCustomer' => $this->getTotalActiveData()
 		);
 		$this->template->load('template', 'admin/dashboard', $data);
 		
 	}
+
+	public function getTotalActiveData(){
+		$this->db->like('level', '2');
+		$this->db->from('users');
+		return $this->db->count_all_results();
+	}
+
+
 
 
 

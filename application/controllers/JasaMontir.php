@@ -383,5 +383,42 @@ class JasaMontir extends CI_Controller {
             redirect('jasamontir/allmontirorders');
         }  
     }
+
+    public function sendreminder($id){
+        //notifikasi ke email setelah pesanan / booking dilakukan (disimpan); detil notifikasi : tgl booking, 
+            //jam booking, keluhan, kendaraan, biaya yang harus dibayar, maksimal jam bayar, 
+            //bayar ke bank apa, no rek dan nama rekening;
+
+            $idUser = $this->jasamontir_m->get($id)->row()->userid;
+
+            $orderData = $this->jasamontir_m->get($id)->row();
+            $userData = $this->user_m->get($idUser)->row();
+
+            $mailData = array(
+                'recipient' => $userData->email,
+                'attachment' => null,
+                'subject' => 'Reminder Service Motor - SM Motor',
+                'content' => '
+                    <html>
+                        <head>
+                        <title>Reminder Service - SM Motor</title>
+                        </head>
+                        <body>
+                        <p>Pelanggan yth a.n, '.$userData->fullname .'</p>
+                        <p>Anda melakukan Booking Montir untuk tanggal '. $orderData->orderdate .'</p>
+                        <p>Dengan jenis kendaraan : '.$orderData->merk.' '.$orderData->type.'</p>
+                        <p>Agar Segera Bersiap2 Karena Montir Akan Datang Ke Lokasi 30 Menit Sebelum waktu service</p>
+                        </body>
+                    </html>
+                ' 
+            );
+ 
+            $this->sendmail->send($mailData);
+
+            if($this->db->affected_rows() > 0){
+                $this->session->set_flashdata('notif_success', 'Data berhasil disimpan');
+                redirect('jasaservice/allservicebooking');
+            }
+    }
     
 }
