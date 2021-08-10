@@ -15,7 +15,7 @@ function isLogin(){
 function isLogout(){
     $ci =& get_instance();
     $user_session = $ci->session->userdata('userid');
-    if(!$user_session){
+    if($user_session == null){
         redirect('auth');
     }
 }

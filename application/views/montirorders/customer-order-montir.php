@@ -2,7 +2,7 @@
 <h1 class="h3 mb-4 text-gray-800">Booking Montir</h1>
 
 <div class="row">
-    <div class="col-lg-8">
+    <div class="col-lg-12">
         <div class="card shadow mb-4">
             <!-- Card Header - Accordion -->
             <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"

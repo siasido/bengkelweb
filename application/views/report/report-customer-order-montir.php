@@ -54,18 +54,49 @@
                         <th>Booking Untuk Tanggal</th>
                         <th>Merk Motor</th>
                         <th>Kendala</th>
-                        <th>Status</th>
+                        <th>Status Pembayaran</th>
+                        <th>Status Pengerjaan</th>
                     </tr>
                 </thead>
                 <tbody>
                 <?php foreach ($result as $key => $data) { ?>
                     <tr>
+                        <?php $time = DateTime::createFromFormat('Y-m-d H:i:s', $data->orderdate); ?>
+                        <?php $time->modify('+30 minutes'); ?>
+                        <?php $now = new DateTime() ?>
                         <td><?=$data->nama?></td>
                         <td><?=$data->nohp?></td>
                         <td><?=$data->orderdate?></td>
                         <td><?=$data->merk.' '.$data->type?></td>
                         <td><?=$data->kendala?></td>
-                        <td><?=$data->status?></td>
+                        <?php if (($now > $time && $data->statusbayar == 0 ) || ($now > $time && $data->statusbayar == 2)) { ?>
+                            <td> Pesanan Invalid </td>
+                            <td> - </td>
+                            </td>
+                        <?php } else if ($data->statusbayar == 0 ) { ?>
+                            <td> Menunggu Pembayaran </td>
+                            <td><?=$data->status?></td>
+                            </td>
+                        <?php } else if ($data->statusbayar == 1 ) { ?>
+                            <td> Menunggu Konfirmasi Pembayaran oleh Admin</td>
+                            <td><?=$data->status?></td>
+                        <?php } else if ($data->statusbayar == 2 )  { ?>
+                            <td>Pembayaran Diterima</td>
+                            <?php if ($data->status == 0 || $data->status == null) { ?>
+                                <td>Menunggu Penunjukan Montir</td>
+                            <?php } else if ($data->status == 1) { ?>
+                            <td>Sedang mengirim montir <?=$data->namamontir?> ke lokasi </td>
+                            <?php } else if ($data->status == 2) { ?>
+                            <td>Sedang Dikerjakan oleh <?=$data->namamontir?> </td>
+                            <td></td>
+                            <?php } else if ($data->status == 3) { ?>
+                                <td>Telah Selesai Dikerjakan oleh <?=$data->namamontir?> </td>
+
+                            <?php } ?>
+                        <?php } else if ($data->statusbayar == 3) { ?>
+                            <td> Pembayaran Ditolak karena <?=$data->notes ??  '-'?> .Silahkan Upload Ulang Bukti Pembayaran </td>
+                            <td> <?=$data->status?></td>
+                        <?php }?>
                         
                     </tr>
                 <?php } ?>
