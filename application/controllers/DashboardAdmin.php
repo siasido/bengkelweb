@@ -5,7 +5,8 @@ class DashboardAdmin extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->helper('tanggal');
-		// $this->load->model('order_m');
+		$this->load->model('jasamontir_m');
+		$this->load->model('jasaservice_m');
 		// isLogout();
 	}
 
@@ -15,8 +16,10 @@ class DashboardAdmin extends CI_Controller {
 		$data = array(
 			'active_menu' => 'dashboard',
 			'totalMontir' => $this->db->count_all('montir'),
-			'totalOrderMontir' => $this->db->count_all('montirorders'),
-			'totalService' => $this->db->count_all('serviceorders'),
+			'totalOngoingOrder' => $this->jasamontir_m->getOngoingOrdersCount(),
+			'totalOngoingService' => $this->jasaservice_m->getOngoingOrdersCount(),
+			'totalFinishedOrder' => $this->jasamontir_m->getFinishedOrdersCount(),
+			'totalFinishedService' => $this->jasaservice_m->getFinishedOrdersCount(),
 			'totalCustomer' => $this->getTotalActiveData()
 		);
 		$this->template->load('template', 'admin/dashboard', $data);

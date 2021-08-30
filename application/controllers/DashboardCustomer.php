@@ -6,6 +6,7 @@ class DashboardCustomer extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('tanggal');
 		$this->load->model('jasamontir_m');
+		$this->load->model('jasaservice_m');
 		isLogout();
 	}
 
@@ -13,8 +14,8 @@ class DashboardCustomer extends CI_Controller {
 	{
 		$data = array(
 			'active_menu' => 'dashboard',
-			'totalOrderMontir' => $this->db->count_all('montirorders'),
-			'totalService' => $this->db->count_all('serviceorders'),
+			'totalOrderMontir' => $this->jasamontir_m->getOrdersCount($this->session->userdata('userid')),
+			'totalService' => $this->jasaservice_m->getOrdersCount($this->session->userdata('userid')),
 		);
 		$this->template->load('template-customer', 'customer/dashboard', $data);
 
@@ -23,6 +24,8 @@ class DashboardCustomer extends CI_Controller {
 	public function admin(){
 		$this->template->load('template', 'admin/booking-list', null);
 	}
+
+	
 
 
 	

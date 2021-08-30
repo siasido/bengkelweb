@@ -35,26 +35,18 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="orderdate">Booking Untuk Tanggal</label>
-                                    <input name="orderdate" type="date" class="form-control" id="orderdate" min="<?php echo date("Y-m-d"); ?>" value="<?php echo set_value('orderdate');?>" required>
+                                    <input name="orderdate" type="date" onchange="selectTanggal(event);" class="form-control" id="orderdate" min="<?php echo date("Y-m-d"); ?>" value="<?php echo set_value('orderdate');?>" required>
                                 </div>     
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="jam">Booking Untuk Jam :</label>
-                                    <select class="form-control" id="jam" name="jam" required>
-                                        <option value="">- Pilih Jam -</option>
-                                        <?php $jam = $this->input->post('jam')?>
-
-                                        <option value="09:00" <?php echo $jam == "09:00" ? 'selected' : null ?>>09:00</option>
-                                        <option value="10:00" <?php echo $jam == "10:00" ? 'selected' : null ?>>10:00</option>
-                                        <option value="11:00" <?php echo $jam == "11:00" ? 'selected' : null ?>>11:00</option>
-                                        <option value="12:00" <?php echo $jam == "12:00" ? 'selected' : null ?>>12:00</option>
-                                        <option value="13:00" <?php echo $jam == "13:00" ? 'selected' : null ?>>13:00</option>
-                                        <option value="14:00" <?php echo $jam == "14:00" ? 'selected' : null ?>>14:00</option>
-                                        <option value="15:00" <?php echo $jam == "15:00" ? 'selected' : null ?>>15:00</option>
-                                        <option value="16:00" <?php echo $jam == "16:00" ? 'selected' : null ?>>16:00</option>
-                                        <option value="17:00" <?php echo $jam == "17:00" ? 'selected' : null ?>>17:00</option>
-                                    </select>
+                                    <div id="dinamic-options">
+                                        <select class="form-control" id="jam" name="jam" required>
+                                            <option value="">- Pilih Jam -</option>
+                                            
+                                        </select>
+                                    </div>
                                     <label class="invalid-text" for="jam"><?php echo form_error('jam'); ?></label>
                                 </div>     
                             </div>
@@ -148,3 +140,32 @@
         </div>
     </div>
 </div>
+
+<script>
+    function selectTanggal(e){
+        // alert(e.target.value);
+    
+        var BASE_URL = "<?php echo base_url();?>";
+
+        $.ajax({
+            url: BASE_URL+ 'jasamontir/getBookedHours',
+            type: 'post',
+            data: {orderdate : e.target.value},
+            dataType: 'json',
+            success:function(response) {
+
+            html = '<select class="form-control" id="jam" name="jam" required>' +
+                    '<option value="">- Pilih Jam -</option>'
+
+                    $.each(response.data, function(key, value) {
+                        html += '<option value="'+key+'" '+(value == "booked" ? 'disabled style="color:red"' : null) +'>'+key + (value == "booked" ? ' - Booked' : ' - Available')+'</option>';             
+                    });
+            html += '</select>';
+            console.log(html);
+            $('#dinamic-options').empty();
+            $('#dinamic-options').append(html);
+            
+            } // /success
+        });
+    }
+</script>

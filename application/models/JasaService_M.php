@@ -69,6 +69,36 @@ class JasaService_M extends CI_Model {
         return $query;
     }
 
+    public function getBookedHours($param){
+        $query = "SELECT id as orderid, DATE_FORMAT(orderdate, '%H:%i') jam from serviceorders where orderdate like '$param%' and statusbayar = 2";
+        return $this->db->query($query)->result();
+    }
 
+    public function getOrdersCount($param){
+        $this->db->select('*');
+        $this->db->from('serviceorders');
+        $this->db->where('userid', $param);
+        return $this->db->count_all_results(); 
+    }
+
+    public function getFinishedOrdersCount($param = null){
+        $this->db->select('*');
+        $this->db->from('serviceorders');
+        if ($param){
+            $this->db->where('userid', $param);
+        }
+        $this->db->where('status', 2);
+        return $this->db->count_all_results(); 
+    }
+
+    public function getOngoingOrdersCount($param = null){
+        $this->db->select('*');
+        $this->db->from('serviceorders');
+        if ($param){
+            $this->db->where('userid', $param);
+        }
+        $this->db->where('status <', 2);
+        return $this->db->count_all_results(); 
+    }
     
 }

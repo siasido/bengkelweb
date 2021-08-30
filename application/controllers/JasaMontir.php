@@ -420,5 +420,33 @@ class JasaMontir extends CI_Controller {
                 redirect('jasaservice/allservicebooking');
             }
     }
+
+    public function getBookedHours(){
+        $param = $this->input->post('orderdate');
+		$bookedHours = $this->jasamontir_m->getBookedHours($param);
+		// echo json_encode($bookedHours);
+		// var_dump($bookedHours);
+		$data = array (
+			'09:00' => 'available',
+			'10:00' => 'available',
+			'11:00' => 'available',
+			'12:00' => 'available',
+			'13:00' => 'available',
+			'14:00' => 'available',
+			'15:00' => 'available',
+			'16:00' => 'available',
+			'17:00' => 'available'
+		);
+		if ($bookedHours){ 
+			foreach ($bookedHours as $key => $value) {
+				if ($data[$value->jam] != null ){
+					$data[$value->jam] = 'booked';
+				}
+			}
+		}
+
+		echo json_encode(['data' => $data]);
+        // exit();
+	}
     
 }
