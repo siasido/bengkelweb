@@ -448,5 +448,40 @@ class JasaMontir extends CI_Controller {
 		echo json_encode(['data' => $data]);
         // exit();
 	}
+
+    public function inputpelunasan(){
+        $post = $this->input->post(null, true);
+
+        if (isset($post['submit'])){
+            $postData = array(
+                'sisapelunasan' => $post['sisapelunasan'],
+                'statuspelunasan' => 1,
+            );
+
+            $this->jasamontir_m->update($postData, $post['id']);
+
+            if($this->db->affected_rows() > 0){
+                $this->session->set_flashdata('notif_success', 'Data berhasil disimpan');
+                redirect('jasamontir/mymontirorders');
+            }
+        }
+    }
+
+    public function confirmpelunasan(){
+        $post = $this->input->post(null, true);
+
+        if (isset($post['submit'])){
+            $postData = array(
+                'statuspelunasan' => $post['statuspelunasan'],
+            );
+
+            $this->jasamontir_m->update($postData, $post['id']);
+
+            if($this->db->affected_rows() > 0){
+                $this->session->set_flashdata('notif_success', 'Data berhasil disimpan');
+                redirect('jasamontir/mymontirorders');
+            }
+        }
+    }
     
 }

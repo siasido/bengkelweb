@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 30, 2021 at 05:55 PM
+-- Generation Time: Aug 31, 2021 at 04:53 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.3.27
 
@@ -64,17 +64,20 @@ CREATE TABLE `montirorders` (
   `created_at` datetime NOT NULL,
   `idmontir` int(1) NOT NULL,
   `notes` text DEFAULT NULL,
-  `statusbayar` int(11) NOT NULL
+  `statusbayar` int(11) NOT NULL,
+  `sisapelunasan` int(11) NOT NULL,
+  `statuspelunasan` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `montirorders`
 --
 
-INSERT INTO `montirorders` (`id`, `userid`, `nama`, `nohp`, `alamatlengkap`, `orderdate`, `idmerk`, `type`, `kendala`, `idrekening`, `status`, `resi`, `created_at`, `idmontir`, `notes`, `statusbayar`) VALUES
-(1, 2, '', '', 'zz', '2021-07-22 17:00:00', 3, 'Scoopy', 'zz', 1, '3', 'resi-120210722131044.jpg', '2021-07-22 13:09:43', 1, 'zzz', 2),
-(2, 2, '', '', 'zz', '2021-08-20 09:00:00', 4, 'zz', 'zz', 2, '', 'resi-220210819170214.jpg', '2021-08-19 17:01:25', 0, '', 2),
-(3, 2, '', '', 'qq', '2021-08-20 12:00:00', 3, 'qq', 'qq', 2, '', 'resi-320210819170206.jpg', '2021-08-19 17:01:50', 0, '', 2);
+INSERT INTO `montirorders` (`id`, `userid`, `nama`, `nohp`, `alamatlengkap`, `orderdate`, `idmerk`, `type`, `kendala`, `idrekening`, `status`, `resi`, `created_at`, `idmontir`, `notes`, `statusbayar`, `sisapelunasan`, `statuspelunasan`) VALUES
+(1, 2, '', '', 'zz', '2021-07-22 17:00:00', 3, 'Scoopy', 'zz', 1, '3', 'resi-120210722131044.jpg', '2021-07-22 13:09:43', 1, 'zzz', 2, 0, 0),
+(2, 2, '', '', 'zz', '2021-08-20 09:00:00', 4, 'zz', 'zz', 2, '', 'resi-220210819170214.jpg', '2021-08-19 17:01:25', 0, '', 2, 0, 0),
+(3, 2, '', '', 'qq', '2021-08-20 12:00:00', 3, 'qq', 'qq', 2, '', 'resi-320210819170206.jpg', '2021-08-19 17:01:50', 0, '', 2, 0, 0),
+(4, 2, '', '', 'aa', '2021-09-02 09:00:00', 4, 'n123', 'aa', 1, '3', 'resi-420210831210631.jpeg', '2021-08-31 21:06:20', 1, '', 2, 300000, 2);
 
 -- --------------------------------------------------------
 
@@ -243,7 +246,7 @@ ALTER TABLE `montir`
 -- AUTO_INCREMENT for table `montirorders`
 --
 ALTER TABLE `montirorders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `motor`

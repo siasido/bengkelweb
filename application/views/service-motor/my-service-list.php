@@ -1,3 +1,21 @@
+<?php if ($this->session->flashdata('notif_success')) { ?>
+    <div class="alert alert-success alert-dismissible bg-success text-white border-0 fade show" role="alert">
+        <button type="button" class="close ml-auto" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>Success - </strong><?= $this->session->flashdata('notif_success') ?>
+    </div>
+<?php } ?>
+
+<?php if ($this->session->flashdata('notif_failed')) { ?>
+    <div class="alert alert-danger alert-dismissible bg-danger text-white border-0 fade show" role="alert">
+        <button type="button" class="close ml-auto" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>Error - </strong> <?= $this->session->flashdata('notif_failed') ?>
+    </div>
+<?php } ?>
+
 
 <div class="row">
     <div class="col-lg-6"> <h1 class="h3 mb-4 text-gray-800">List Booking Service</h1> </div>
@@ -63,7 +81,9 @@
                             <?php } else if ($data->status == 2) { ?>
                                 <td>Telah Selesai Diservice </td>
 
-                                <td></td>
+                                <td>
+                                <!-- <a class="btn btn-info" href="#" data-toggle="modal" data-target="#pelunasanModal<?=$data->orderid?>">Input Pelunasan</a> -->
+                                </td>
                             <?php } ?>
                         <?php } else if ($data->statusbayar == 3) { ?>
                             <td> Pembayaran Ditolak karena <?=$data->notes ?? '-'?> .Silahkan Upload Ulang Bukti Pembayaran </td>
@@ -89,3 +109,4 @@
         </div>
     </div>
 </div>
+

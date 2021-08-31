@@ -23,7 +23,7 @@ class JasaMontir_M extends CI_Model {
     }
 
     public function get($id = null){
-        $this->db->select('a.id as orderid, e.namamontir, a.statusbayar, a.notes, a.userid, b.nohp, b.fullname as nama, a.alamatlengkap, idmerk, merk, type, kendala, resi, idrekening, namabank, norek, namaakun, orderdate, status');
+        $this->db->select('a.id as orderid, a.statuspelunasan, a.sisapelunasan, e.namamontir, a.statusbayar, a.notes, a.userid, b.nohp, b.fullname as nama, a.alamatlengkap, idmerk, merk, type, kendala, resi, idrekening, namabank, norek, namaakun, orderdate, status');
         $this->db->from('montirorders a');
         $this->db->join('users b', 'a.userid = b.userid');
         $this->db->join('motor c', 'a.idmerk = c.id');
@@ -38,7 +38,7 @@ class JasaMontir_M extends CI_Model {
     }
 
     public function getByUserId($id = null){
-        $this->db->select('a.id as orderid, a.userid, a.statusbayar, a.notes, e.namamontir, b.nohp, b.fullname as nama, a.alamatlengkap, idmerk, merk, type, kendala, resi, idrekening, namabank, norek, namaakun, orderdate, status');
+        $this->db->select('a.id as orderid, a.statuspelunasan, a.sisapelunasan, a.userid, a.statusbayar, a.notes, e.namamontir, b.nohp, b.fullname as nama, a.alamatlengkap, idmerk, merk, type, kendala, resi, idrekening, namabank, norek, namaakun, orderdate, status');
         $this->db->from('montirorders a');
         $this->db->join('users b', 'a.userid = b.userid');
         $this->db->join('motor c', 'a.idmerk = c.id');
@@ -61,7 +61,7 @@ class JasaMontir_M extends CI_Model {
     }
 
     public function getByMonth($month){
-        $this->db->select('a.id as orderid, e.namamontir, a.statusbayar, a.notes, a.userid, b.nohp, b.fullname as nama, a.alamatlengkap, idmerk, merk, type, kendala, resi, idrekening, namabank, norek, namaakun, orderdate, status');
+        $this->db->select('a.id as orderid, a.statuspelunasan, a.sisapelunasan, e.namamontir, a.statusbayar, a.notes, a.userid, b.nohp, b.fullname as nama, a.alamatlengkap, idmerk, merk, type, kendala, resi, idrekening, namabank, norek, namaakun, orderdate, status');
         $this->db->from('montirorders a');
         $this->db->join('users b', 'a.userid = b.userid');
         $this->db->join('motor c', 'a.idmerk = c.id');
@@ -91,7 +91,7 @@ class JasaMontir_M extends CI_Model {
         if ($param){
             $this->db->where('userid', $param);
         }
-        $this->db->where('status', 2);
+        $this->db->where('status', 3);
         return $this->db->count_all_results(); 
     }
 

@@ -1,4 +1,22 @@
 
+<?php if ($this->session->flashdata('notif_success')) { ?>
+    <div class="alert alert-success alert-dismissible bg-success text-white border-0 fade show" role="alert">
+        <button type="button" class="close ml-auto" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>Success - </strong><?= $this->session->flashdata('notif_success') ?>
+    </div>
+<?php } ?>
+
+<?php if ($this->session->flashdata('notif_failed')) { ?>
+    <div class="alert alert-danger alert-dismissible bg-danger text-white border-0 fade show" role="alert">
+        <button type="button" class="close ml-auto" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>Error - </strong> <?= $this->session->flashdata('notif_failed') ?>
+    </div>
+<?php } ?>
+
 <div class="row">
     <div class="col-lg-6"> <h1 class="h3 mb-4 text-gray-800">List Order Montir</h1> </div>
     <div class="col-lg-6 text-right"> <a class="btn btn-primary" href="<?=site_url('jasamontir/ordermontir')?>">Booking Montir</a></div>
@@ -22,6 +40,8 @@
                         <th>Kendala</th>
                         <th>Status Bayar</th>
                         <th>Status Pengerjaan</th>
+                        <th>Sisa Pelunasan</th>
+                        <th>Status Pelunasan</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -40,11 +60,14 @@
                         <?php if (($now > $time && $data->statusbayar == 0 ) || ($now > $time && $data->statusbayar == 2)) { ?>
                             <td> Pesanan Invalid </td>
                             <td> - </td>
-                            <td> - 
-                            </td>
+                            <td></td>
+                            <td></td>
+                            <td> - </td>
                         <?php } else if ($data->statusbayar == 0 ) { ?>
                             <td> Menunggu Pembayaran </td>
                             <td><?=$data->status?></td>
+                            <td></td>
+                            <td></td>
                             <td>
                                 <a href="<?=site_url('jasamontir/getformbayar/'.$data->orderid)?>" class="btn btn-warning btn-sm">
                                     <i class="fas fa-upload"></i>
@@ -53,23 +76,35 @@
                         <?php } else if ($data->statusbayar == 1 ) { ?>
                             <td> Menunggu Konfirmasi Pembayaran oleh Admin</td>
                             <td><?=$data->status?></td>
+                            <td></td>
+                            <td></td>
                             <td> </td>
                         <?php } else if ($data->statusbayar == 2 )  { ?>
                             <td>Pembayaran Diterima</td>
                             <?php if ($data->status == 0 || $data->status == null) { ?>
                                 <td>Menunggu Penunjukan Montir</td>
                                 <td></td>
+                                <td></td>
+                                <td></td>
                             <?php } else if ($data->status == 1) { ?>
                             <td>Sedang mengirim montir <?=$data->namamontir?> ke lokasi </td>
                             <td></td>
+                            <td></td>
+                            <td></td>
                             <?php } else if ($data->status == 2) { ?>
                             <td>Sedang Dikerjakan oleh <?=$data->namamontir?> </td>
-
+                            <td></td>
+                            <td></td>
                             <td></td>
                             <?php } else if ($data->status == 3) { ?>
                                 <td>Telah Selesai Dikerjakan oleh <?=$data->namamontir?> </td>
-
-                                <td></td>
+                                <td>Rp<?=number_format($data->sisapelunasan,2,',','.')?></td>
+                                <td><?=$data->statuspelunasan == 2 ? 'Lunas' : '-'?></td>
+                                <td>
+                                    <?php if ($data->statuspelunasan == 0) { ?>
+                                        <a class="btn btn-info" href="#" data-toggle="modal" data-target="#pelunasanModal<?=$data->orderid?>">Input Pelunasan</a>
+                                    <?php } ?>
+                                </td>
                             <?php } ?>
                         <?php } else if ($data->statusbayar == 3) { ?>
                             <td> Pembayaran Ditolak karena <?=$data->notes ??  '-'?> .Silahkan Upload Ulang Bukti Pembayaran </td>
@@ -95,3 +130,42 @@
         </div>
     </div>
 </div>
+
+<?php foreach ($result as $key => $data) { ?>
+<div id="pelunasanModal<?=$data->orderid?>" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg" role="content">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Pelunasan</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="<?=site_url('jasamontir/inputpelunasan')?>" method="post">
+                        <input type="hidden" name="id" value="<?=$data->orderid?>">
+                        <div class="form-group row">
+                            <div class="col-12 col-sm-3 offset-sm-1">
+                                <label for="firstname" class="form-check-label"><strong>Sisa Pelunasan</strong></label>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <input type="number" class="form-control" id="sisapelunasan" name="sisapelunasan" placeholder="">
+                            </div>
+                            <div class="col col-sm"></div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <div class="col-12 offset-sm-4">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                    Cancel
+                                 </button>
+                                <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
