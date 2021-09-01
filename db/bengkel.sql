@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 31, 2021 at 04:53 PM
+-- Generation Time: Sep 01, 2021 at 03:25 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.3.27
 
@@ -34,14 +34,6 @@ CREATE TABLE `montir` (
   `is_deleted` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `montir`
---
-
-INSERT INTO `montir` (`idmontir`, `namamontir`, `nohp`, `is_deleted`) VALUES
-(1, 'Galihzz', '08123123112', 0),
-(2, 'jajang', '09876786722', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -68,16 +60,6 @@ CREATE TABLE `montirorders` (
   `sisapelunasan` int(11) NOT NULL,
   `statuspelunasan` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `montirorders`
---
-
-INSERT INTO `montirorders` (`id`, `userid`, `nama`, `nohp`, `alamatlengkap`, `orderdate`, `idmerk`, `type`, `kendala`, `idrekening`, `status`, `resi`, `created_at`, `idmontir`, `notes`, `statusbayar`, `sisapelunasan`, `statuspelunasan`) VALUES
-(1, 2, '', '', 'zz', '2021-07-22 17:00:00', 3, 'Scoopy', 'zz', 1, '3', 'resi-120210722131044.jpg', '2021-07-22 13:09:43', 1, 'zzz', 2, 0, 0),
-(2, 2, '', '', 'zz', '2021-08-20 09:00:00', 4, 'zz', 'zz', 2, '', 'resi-220210819170214.jpg', '2021-08-19 17:01:25', 0, '', 2, 0, 0),
-(3, 2, '', '', 'qq', '2021-08-20 12:00:00', 3, 'qq', 'qq', 2, '', 'resi-320210819170206.jpg', '2021-08-19 17:01:50', 0, '', 2, 0, 0),
-(4, 2, '', '', 'aa', '2021-09-02 09:00:00', 4, 'n123', 'aa', 1, '3', 'resi-420210831210631.jpeg', '2021-08-31 21:06:20', 1, '', 2, 300000, 2);
 
 -- --------------------------------------------------------
 
@@ -145,20 +127,18 @@ CREATE TABLE `serviceorders` (
   `status` int(1) NOT NULL DEFAULT 0,
   `resi` varchar(30) DEFAULT NULL,
   `statusbayar` int(1) NOT NULL,
-  `notes` text NOT NULL
+  `notes` text NOT NULL,
+  `sisapelunasan` int(11) NOT NULL,
+  `statuspelunasan` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `serviceorders`
 --
 
-INSERT INTO `serviceorders` (`id`, `userid`, `nama`, `idmerk`, `type`, `nohp`, `kendala`, `idrekening`, `orderdate`, `created_at`, `status`, `resi`, `statusbayar`, `notes`) VALUES
-(2, 2, NULL, 3, 'zz', NULL, 'zz', 1, '2021-07-30 10:00:00', '2021-07-22 14:16:22', 2, 'resi-220210722145830.jpg', 2, 'ok'),
-(3, 3, NULL, 1, 'Nmax', NULL, 'aaaaa', 1, '2021-07-26 09:00:00', '2021-07-25 10:50:18', 0, NULL, 2, ''),
-(4, 3, NULL, 1, 'Nmax', NULL, 'aaaaa', 1, '2021-07-26 15:00:00', '2021-07-25 10:51:32', 0, NULL, 2, ''),
-(5, 2, NULL, 3, 'Scoopy', NULL, 'AA', 2, '2021-08-12 09:00:00', '2021-08-10 18:08:14', 0, 'resi-520210810180832.jpg', 2, 'acc'),
-(6, 2, NULL, 3, 'qq', NULL, 'qweqe', 1, '2021-08-21 09:00:00', '2021-08-19 18:33:05', 0, 'resi-620210819183326.jpg', 2, ''),
-(7, 2, NULL, 3, 'king', NULL, 'zzz', 1, '2021-09-01 10:00:00', '2021-08-30 18:56:17', 2, 'resi-720210830185629.jpg', 2, '');
+INSERT INTO `serviceorders` (`id`, `userid`, `nama`, `idmerk`, `type`, `nohp`, `kendala`, `idrekening`, `orderdate`, `created_at`, `status`, `resi`, `statusbayar`, `notes`, `sisapelunasan`, `statuspelunasan`) VALUES
+(1, 2, NULL, 3, '1', NULL, '1', 1, '2021-09-02 09:00:00', '2021-09-01 19:23:15', 99, NULL, 0, '', 0, 0),
+(2, 2, NULL, 1, '2', NULL, '2', 1, '2021-09-02 09:00:00', '2021-09-01 19:55:39', 2, 'resi-220210901195648.jpg', 2, '2', 500000, 2);
 
 -- --------------------------------------------------------
 
@@ -240,13 +220,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `montir`
 --
 ALTER TABLE `montir`
-  MODIFY `idmontir` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idmontir` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `montirorders`
 --
 ALTER TABLE `montirorders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `motor`
@@ -264,7 +244,7 @@ ALTER TABLE `rekening`
 -- AUTO_INCREMENT for table `serviceorders`
 --
 ALTER TABLE `serviceorders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`

@@ -59,7 +59,7 @@ class JasaMontir extends CI_Controller {
         // $this->form_validation->set_rules('nohp', 'No. HP', 'trim|required|numeric|max_length[15]');
         $this->form_validation->set_rules('alamatlengkap', 'Alamat', 'trim|required');
         $this->form_validation->set_rules('orderdate', 'Tanggal Booking', 'trim|required');
-        $this->form_validation->set_rules('jam', 'Jam Booking', 'trim|required|callback_orderdate_check');
+        $this->form_validation->set_rules('jam', 'Jam Booking', 'trim|required');
 		$this->form_validation->set_rules('idmerk', 'Merk Motor', 'trim|required');
         $this->form_validation->set_rules('idrekening', 'Rekening Pembayaran', 'trim|required');
         $this->form_validation->set_rules('type', 'Type Motor', 'trim|required|max_length[50]');
@@ -327,7 +327,7 @@ class JasaMontir extends CI_Controller {
     
     public function cancel($id){
         $postData = array(
-            'status' => 'batal order'
+            'status' => '99'
         );
 
         $this->jasamontir_m->update($postData, $id);
@@ -479,7 +479,7 @@ class JasaMontir extends CI_Controller {
 
             if($this->db->affected_rows() > 0){
                 $this->session->set_flashdata('notif_success', 'Data berhasil disimpan');
-                redirect('jasamontir/mymontirorders');
+                redirect('jasamontir/allmontirorders');
             }
         }
     }

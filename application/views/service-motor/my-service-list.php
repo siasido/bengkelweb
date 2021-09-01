@@ -39,6 +39,8 @@
                         <th>Kendala</th>
                         <th>Status Bayar</th>
                         <th>Status Pengerjaan</th>
+                        <th>Sisa Pelunasan</th>
+                        <th>Status Pelunasan</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -53,41 +55,76 @@
                         <td><?=$data->orderdate?></td>
                         <td><?=$data->merk.' '.$data->type?></td>
                         <td><?=$data->kendala?></td>
-                        <?php if (($now > $time && $data->statusbayar == 0 ) || ($now > $time && $data->statusbayar == 2)) { ?>
+                        <?php if ($data->status == 99) { ?>
+                            <td> Pesanan Dibatalkan </td>
+                            <td> - </td>
+                            <td> -</td>
+                            <td> -</td>
+                            <td> - </td>
+                        <?php } else if (($now > $time && $data->statusbayar == 0 ) || ($now > $time && $data->statusbayar == 2)) { ?>
                             <td> Pesanan Invalid </td>
                             <td> - </td>
-                            <td> - </a>
-                            </td>
+                            <td> - </td>
+                            <td> - </td>
+                            <td> - </td>
                         <?php } else if ($data->statusbayar == 0 ) { ?>
                             <td> Menunggu Pembayaran </td>
-                            <td><?=$data->status?></td>
+                            <td> - </td>
+                            <td> - </td>
+                            <td> - </td>
                             <td>
-                                <a href="<?=site_url('jasaservice/getformbayar/'.$data->orderid)?>" class="btn btn-warning btn-sm">
+                                <a href="<?=site_url('jasaservice/edit/'.$data->orderid)?>" class="btn btn-warning btn-sm">
+                                    Edit
+                                </a>
+                                <a href="<?=site_url('jasaservice/getformbayar/'.$data->orderid)?>" class="btn btn-info btn-sm">
                                     <i class="fas fa-upload"></i>
+                                </a>
+                                <a href="<?=site_url('jasaservice/cancel/'.$data->orderid)?>" class="btn btn-danger btn-sm">
+                                    Cancel
                                 </a>
                             </td>
                         <?php } else if ($data->statusbayar == 1 ) { ?>
                             <td> Menunggu Konfirmasi Pembayaran oleh Admin</td>
-                            <td><?=$data->status?></td>
-                            <td> </td>
+                            <td> -</td>
+                            <td> -</td>
+                            <td> -</td>
+                            <td>
+                                <a href="<?=site_url('jasaservice/edit/'.$data->orderid)?>" class="btn btn-warning btn-sm">
+                                    Edit
+                                </a>
+                                <a href="<?=site_url('jasaservice/getformbayar/'.$data->orderid)?>" class="btn btn-info btn-sm">
+                                    <i class="fas fa-upload"></i>
+                                </a>
+                                <a href="<?=site_url('jasaservice/cancel/'.$data->orderid)?>" class="btn btn-danger btn-sm">
+                                    Cancel
+                                </a>
+                            </td>
                         <?php } else if ($data->statusbayar == 2 )  { ?>
                             <td>Pembayaran Diterima</td>
                             <?php if ($data->status == 0 || $data->status == null) { ?>
                             <td>Masih dalam antrian</td>
-                            <td></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
                             <?php } else if ($data->status == 1) { ?>
                             <td>Sedang Diproses </td>
-                            <td></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
                             <?php } else if ($data->status == 2) { ?>
                                 <td>Telah Selesai Diservice </td>
-
-                                <td>
-                                <!-- <a class="btn btn-info" href="#" data-toggle="modal" data-target="#pelunasanModal<?=$data->orderid?>">Input Pelunasan</a> -->
+                                <td>Rp<?=number_format($data->sisapelunasan,2,',','.')?></td>
+                                <td><?=$data->statuspelunasan == 2 ? 'Lunas' : '-'?></td>
+                                <td>-
+                                <!--  -->
                                 </td>
+                                
                             <?php } ?>
                         <?php } else if ($data->statusbayar == 3) { ?>
                             <td> Pembayaran Ditolak karena <?=$data->notes ?? '-'?> .Silahkan Upload Ulang Bukti Pembayaran </td>
-                            <td> <?=$data->status?></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
                             <td>
                                 <a href="<?=site_url('jasaservice/edit/'.$data->orderid)?>" class="btn btn-warning btn-sm">
                                     Edit

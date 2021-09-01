@@ -57,45 +57,58 @@
                         <td><?=$data->orderdate?></td>
                         <td><?=$data->merk.' '.$data->type?></td>
                         <td><?=$data->kendala?></td>
-                        <?php if (($now > $time && $data->statusbayar == 0 ) || ($now > $time && $data->statusbayar == 2)) { ?>
+                        <?php if ($data->status == 99) { ?>
+                            <td> Pesanan Dibatalkan </td>
+                            <td> - </td>
+                            <td> -</td>
+                            <td> -</td>
+                            <td> - </td>
+                        <?php } else if (($now > $time && $data->statusbayar == 0 ) || ($now > $time && $data->statusbayar == 2)) { ?>
                             <td> Pesanan Invalid </td>
                             <td> - </td>
-                            <td></td>
-                            <td></td>
+                            <td> -</td>
+                            <td> -</td>
                             <td> - </td>
                         <?php } else if ($data->statusbayar == 0 ) { ?>
                             <td> Menunggu Pembayaran </td>
-                            <td><?=$data->status?></td>
-                            <td></td>
-                            <td></td>
+                            <td> - </td>
+                            <td> - </td>
+                            <td> - </td>
                             <td>
                                 <a href="<?=site_url('jasamontir/getformbayar/'.$data->orderid)?>" class="btn btn-warning btn-sm">
                                     <i class="fas fa-upload"></i>
                                 </a>
+                                <a href="<?=site_url('jasamontir/cancel/'.$data->orderid)?>" class="btn btn-danger btn-sm">
+                                    Cancel
+                                </a>
                             </td>
                         <?php } else if ($data->statusbayar == 1 ) { ?>
                             <td> Menunggu Konfirmasi Pembayaran oleh Admin</td>
-                            <td><?=$data->status?></td>
-                            <td></td>
-                            <td></td>
-                            <td> </td>
+                            <td> - </td>
+                            <td> - </td>
+                            <td> - </td>
+                            <td> <a href="<?=site_url('jasamontir/cancel/'.$data->orderid)?>" class="btn btn-danger btn-sm">
+                                    Cancel
+                                </a> </td>
                         <?php } else if ($data->statusbayar == 2 )  { ?>
                             <td>Pembayaran Diterima</td>
                             <?php if ($data->status == 0 || $data->status == null) { ?>
                                 <td>Menunggu Penunjukan Montir</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td> - </td>
+                                <td> -</td>
+                                <td><a href="<?=site_url('jasamontir/cancel/'.$data->orderid)?>" class="btn btn-danger btn-sm">
+                                    Cancel
+                                </a></td>
                             <?php } else if ($data->status == 1) { ?>
                             <td>Sedang mengirim montir <?=$data->namamontir?> ke lokasi </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td> -</td>
+                            <td> -</td>
+                            <td> -</td>
                             <?php } else if ($data->status == 2) { ?>
                             <td>Sedang Dikerjakan oleh <?=$data->namamontir?> </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td> -</td>
+                            <td> -</td>
+                            <td> -</td>
                             <?php } else if ($data->status == 3) { ?>
                                 <td>Telah Selesai Dikerjakan oleh <?=$data->namamontir?> </td>
                                 <td>Rp<?=number_format($data->sisapelunasan,2,',','.')?></td>
@@ -108,15 +121,15 @@
                             <?php } ?>
                         <?php } else if ($data->statusbayar == 3) { ?>
                             <td> Pembayaran Ditolak karena <?=$data->notes ??  '-'?> .Silahkan Upload Ulang Bukti Pembayaran </td>
-                            <td> <?=$data->status?></td>
+                            <td> - </td>
+                            <td> - </td>
+                            <td> - </td>
                             <td>
                                 <a href="<?=site_url('jasamontir/edit/'.$data->orderid)?>" class="btn btn-warning btn-sm">
                                     Edit
                                 </a>
-                                <a href="<?=site_url('jasamontir/cancel/'.$data->orderid)?>" class="btn btn-danger btn-sm">
-                                    Cancel
-                                </a>
-                                <a href="<?=site_url('jasamontir/getformbayar/'.$data->orderid)?>" class="btn btn-warning btn-sm">
+                                
+                                <a href="<?=site_url('jasamontir/getformbayar/'.$data->orderid)?>" class="btn btn-info btn-sm">
                                     <i class="fas fa-upload"></i>
                                 </a>
                                 

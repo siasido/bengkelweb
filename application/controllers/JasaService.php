@@ -68,7 +68,7 @@ class JasaService extends CI_Controller {
         // $this->form_validation->set_rules('nama', 'Nama', 'trim|required|max_length[40]');
         // $this->form_validation->set_rules('nohp', 'No. HP', 'trim|required|numeric|max_length[15]');
         $this->form_validation->set_rules('orderdate', 'Tanggal Booking', 'trim|required');
-        $this->form_validation->set_rules('jam', 'Jam Booking', 'trim|required|callback_orderdate_check');
+        $this->form_validation->set_rules('jam', 'Jam Booking', 'trim|required');
 		$this->form_validation->set_rules('idmerk', 'Merk Motor', 'trim|required');
         $this->form_validation->set_rules('idrekening', 'Rekening Pembayaran', 'trim|required');
         $this->form_validation->set_rules('type', 'Type Motor', 'trim|required|max_length[50]');
@@ -348,12 +348,12 @@ class JasaService extends CI_Controller {
 
     public function cancel($id){
         $postData = array(
-            'status' => 'batal order'
+            'status' => '99'
         );
 
         $this->jasaservice_m->update($postData, $id);
         if($this->db->affected_rows() > 0){
-            $this->session->set_flashdata('success', 'Data berhasil disimpan');
+            $this->session->set_flashdata('notif_success', 'Data berhasil disimpan');
             redirect('jasaservice/myservicelist');
         } 
 
@@ -423,5 +423,24 @@ class JasaService extends CI_Controller {
 		echo json_encode(['data' => $data]);
         // exit();
 	}
+
+    public function inputpelunasan(){
+        $post = $this->input->post(null, true);
+
+        if (isset($post['submit'])){
+            $postData = array(
+                'sisapelunasan' => $post['sisapelunasan'],
+                'statuspelunasan' => 2,
+            );
+
+            $this->jasaservice_m->update($postData, $post['id']);
+
+            if($this->db->affected_rows() > 0){
+                $this->session->set_flashdata('notif_success', 'Data berhasil disimpan');
+                redirect('jasaservice/allservicebooking');
+            }
+        }
+    }
+
     
 }
