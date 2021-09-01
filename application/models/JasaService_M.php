@@ -23,7 +23,7 @@ class JasaService_M extends CI_Model {
     }
 
     public function get($id = null){
-        $this->db->select('a.id as orderid, a.statuspelunasan, a.sisapelunasan, a.statusbayar,  a.userid, b.nohp, b.fullname as nama, idmerk, merk, type, kendala, resi, idrekening, namabank, norek, namaakun, orderdate, status');
+        $this->db->select('a.id as orderid, a.statuspelunasan, a.notes, a.sisapelunasan, a.statusbayar,  a.userid, b.nohp, b.fullname as nama, idmerk, merk, type, kendala, resi, idrekening, namabank, norek, namaakun, orderdate, status');
         $this->db->from('serviceorders a');
         $this->db->join('users b', 'a.userid = b.userid');
         $this->db->join('motor c', 'a.idmerk = c.id');
@@ -37,7 +37,7 @@ class JasaService_M extends CI_Model {
     }
 
     public function getByUserId($id = null){
-        $this->db->select('a.id as orderid, a.statuspelunasan, a.sisapelunasan, a.statusbayar,  a.userid, b.nohp, b.fullname as nama, idmerk, merk, type, kendala, resi, idrekening, namabank, norek, namaakun, orderdate, status');
+        $this->db->select('a.id as orderid, a.statuspelunasan, a.notes, a.sisapelunasan, a.statusbayar,  a.userid, b.nohp, b.fullname as nama, idmerk, merk, type, kendala, resi, idrekening, namabank, norek, namaakun, orderdate, status');
         $this->db->from('serviceorders a');
         $this->db->join('users b', 'a.userid = b.userid');
         $this->db->join('motor c', 'a.idmerk = c.id');
@@ -51,7 +51,7 @@ class JasaService_M extends CI_Model {
     }
 
     public function getByMonth($month){
-        $this->db->select('a.id as orderid, a.statuspelunasan, a.sisapelunasan, a.statusbayar,  a.userid, b.nohp, b.fullname as nama, idmerk, merk, type, kendala, resi, idrekening, namabank, norek, namaakun, orderdate, status');
+        $this->db->select('a.id as orderid, a.statuspelunasan, a.notes, a.sisapelunasan, a.statusbayar,  a.userid, b.nohp, b.fullname as nama, idmerk, merk, type, kendala, resi, idrekening, namabank, norek, namaakun, orderdate, status');
         $this->db->from('serviceorders a');
         $this->db->join('users b', 'a.userid = b.userid');
         $this->db->join('motor c', 'a.idmerk = c.id');
