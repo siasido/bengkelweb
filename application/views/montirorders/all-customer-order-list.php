@@ -56,7 +56,7 @@
                         <td><?=$data->nama?></td>
                         <td><?=$data->nohp?></td>
                         <td><?=$data->alamatlengkap?></td>
-                        <td><?=$data->orderdate?></td>
+                        <td><?=datetime_indo($data->orderdate)?></td>
                         <td><?=$data->merk.' '.$data->type?></td>
                         <td><?=$data->kendala?></td>
                         <?php if (($now > $time && $data->statusbayar == 0 ) || ($now > $time && $data->statusbayar == 2)) { ?>

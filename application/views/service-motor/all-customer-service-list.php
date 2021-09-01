@@ -51,7 +51,7 @@
                     <tr>
                         <td><?=$data->nama?></td>
                         <td><?=$data->nohp?></td>
-                        <td><?php $orderdate = DateTime::createFromFormat('Y-m-d H:i:s', $data->orderdate); echo $orderdate->format('d-m-Y H:i:s')?></td>
+                        <td><?=datetime_indo($data->orderdate)?></td>
                         <td><?=$data->merk.' '.$data->type?></td>
                         <td><?=$data->kendala?></td>
                         <?php if ($data->status == 99) { ?>

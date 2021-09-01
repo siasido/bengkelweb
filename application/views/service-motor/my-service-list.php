@@ -52,7 +52,7 @@
                     <tr>
                         <td><?=$data->nama?></td>
                         <td><?=$data->nohp?></td>
-                        <td><?=$data->orderdate?></td>
+                        <td><?=datetime_indo($data->orderdate)?></td>
                         <td><?=$data->merk.' '.$data->type?></td>
                         <td><?=$data->kendala?></td>
                         <?php if ($data->status == 99) { ?>
